@@ -3,13 +3,6 @@ pipeline {
         label 'nodejs'
     }
     stages {
-        stage('Release') {
-            steps {
-                sh '''
-oc project jmhbva-greetings
-oc start-build greeting-console --follow --wait
-''' }
-        }
         stage('Install dependencies') {
             steps {
                 sh 'npm ci'
@@ -26,6 +19,13 @@ oc start-build greeting-console --follow --wait
             steps {
                 sh 'npm test'
             }
+        }
+        stage('Release') {
+            steps {
+                sh '''
+oc project jmhbva-greetings
+oc start-build greeting-console --follow --wait
+''' }
         }
 
     // Add the Release stage here
